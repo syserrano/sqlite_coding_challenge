@@ -78,5 +78,15 @@ GROUP BY
 ORDER BY
     gold_customer_count DESC;
 
-
-    
+SELECT
+    city,
+    SUM(CASE WHEN loyalty_status = 'gold' THEN 1 ELSE 0 END) AS gold_customer_count,
+    SUM(CASE WHEN loyalty_status = 'silver' THEN 1 ELSE 0 END) AS silver_customer_count,
+    SUM(CASE WHEN loyalty_status = 'bronze' THEN 1 ELSE 0 END) AS bronze_customer_count
+    COUNT(*) AS total_customers
+FROM
+    customers
+GROUP BY
+    city
+ORDER BY
+    gold_customer_count DESC, silver_customer_count DESC, bronze_customer_count DESC;
