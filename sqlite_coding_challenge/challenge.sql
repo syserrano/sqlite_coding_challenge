@@ -27,3 +27,21 @@ ORDER BY
     total_revenue DESC
 
 
+SELECT
+    p.category,
+    ROUND(SUM(oi.quantity * oi.unit_price), 2) AS delivered_revenue
+FROM
+    order_items oi
+JOIN
+    orders o ON oi.order_id = o.order_id
+JOIN
+    products p ON oi.product_id = p.product_id
+WHERE
+    o.status = 'delivered'
+GROUP BY
+    p.category
+ORDER BY
+    delivered_revenue DESC
+
+
+SELECT
