@@ -45,3 +45,38 @@ ORDER BY
 
 
 SELECT
+    e.first_name || ' ' || e.last_name
+    d.name AS department,
+    e.salary AS employee_salary,
+    ROUND(department_avg.avg_salary, 2) AS department_avg_salary
+FROM
+    employees e
+JOIN
+    departments d ON e.department_id = d.department_id
+JOIN
+    (SELECT 
+        department_id, 
+        AVG(salary) AS avg_salary 
+        FROM employees 
+        GROUP BY department_id) 
+    department_avg ON department_avg.department_id = e.department_id
+WHERE
+    e.salary > department_avg.avg_salary
+ORDER BY
+    d.name ASC, e.salary DESC;
+
+
+SELECT
+    city,
+    COUNT(*) AS gold_customer_count
+FROM
+    customers
+WHERE
+    loyalty_status = 'gold'
+GROUP BY
+    city
+ORDER BY
+    gold_customer_count DESC;
+
+
+    
